@@ -1,4 +1,3 @@
-import API from "../api/http";
 import { defineStore } from "pinia";
 import Storage from "@/helper/Storage";
 
@@ -32,18 +31,6 @@ export const useUserStore = defineStore({
       try {
         this.user = null;
         Storage.Set("user", null);
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-    async fetchProfile() {
-      this.loading = true;
-      try {
-        await API.get(`/profile`).then((response) => {
-          this.user = response.data;
-        });
       } catch (error) {
         this.error = error;
       } finally {
