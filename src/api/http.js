@@ -17,7 +17,9 @@ export default {
       await API.post(url, data, { headers: headers }).then((response) => {
         resolve(response.data)
       }).catch(error => {
-        toast.error(error.response.data.data.message);
+        if (error.response.data.data.message) {
+          toast.error(error.response.data.data.message);
+        }
         reject(error)
       })
     })

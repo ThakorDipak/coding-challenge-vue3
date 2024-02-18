@@ -22,10 +22,11 @@ export default {
         if (response && response.success == true) {
           await storeToken(response.data.token)
           await storeAuthenticate(response.data)
-          resolve(response.data)
+          toast.success(response.message);
+          resolve(response)
         }
       }).catch((error) => {
-        toast.error(error.response.data.data.message);
+        toast.error(error.response.data.message);
         reject(error.response.data)
       })
     })

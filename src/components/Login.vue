@@ -1,15 +1,34 @@
 <script setup >
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
+import * as yup from 'yup';
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import AUTHENTICATE_API from '@/models/Authentication';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const router = useRouter()
-const email = ref('johndoe@mail.com')
-const password = ref('@#!@#asdf1231!_!@#')
 
 function login() {
   router.push('/dashboard')
 }
+const route = useRouter();
+const loadingIcon = ref(false);
+const loginField = reactive({ email: null, password: null });
+
+const Login = () => {
+  loadingIcon.value = true;
+  AUTHENTICATE_API.authenticate(loginField).then((response) => {
+    loadingIcon.value = false;
+    route.push({ name: 'Dashboard' })
+  }).catch((error) => {
+    loadingIcon.value = false;
+  })
+}
+
+const schema = yup.object({
+  email: yup.string().email().required('Please enter email-id'),
+  password: yup.string().required('Please enter password'),
+});
+
 </script>
 
 <template>
@@ -19,33 +38,20 @@ function login() {
         <span class="text-2xl font-semibold text-gray-700">Admin</span>
       </div>
 
-      <form class="mt-4" @submit.prevent="login">
+      <Form class="mt-4" :validation-schema="schema" @submit="Login()">
         <label class="block">
           <span class="text-sm text-gray-700">Email</span>
-          <input v-model="email" type="email"
-            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500">
-        </label>
+          <Field v-model="loginField.email" name="email" type="email"
+            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500" />
+          <ErrorMessage name="email" class="error-text" />
 
+        </label>
         <label class="block mt-3">
           <span class="text-sm text-gray-700">Password</span>
-          <input v-model="password" type="password"
-            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500">
+          <Field v-model="loginField.password" type="password" name="password" placeholder="Password"
+            class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500" />
+          <ErrorMessage name="password" class="error-text" />
         </label>
-
-        <div class="flex items-center justify-between mt-4">
-          <div>
-            <label class="inline-flex items-center">
-              <input type="checkbox"
-                class="text-indigo-600 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500">
-              <span class="mx-2 text-sm text-gray-600">Remember me</span>
-            </label>
-          </div>
-
-          <div>
-            <a class="block text-sm text-indigo-700 fontme hover:underline" href="#">Forgot your password?</a>
-          </div>
-        </div>
-
         <div class="mt-6">
           <button type="submit"
             class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
