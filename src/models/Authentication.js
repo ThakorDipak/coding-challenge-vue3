@@ -44,4 +44,30 @@ export default {
       })
     })
   },
+
+  resendVerifyMail(data) {
+    return new Promise(async (resolve, reject) => {
+      await API.post('resend-verify-mail', data).then(async (response) => {
+        if (response && response.success == true) {
+          toast.success(response.message);
+          resolve(response.data)
+        } else {
+          resolve(response.data)
+        }
+      })
+    })
+  },
+
+  verification(data) {
+    return new Promise(async (resolve, reject) => {
+      await API.get('email-verify/' + data.token).then(async (response) => {
+        if (response && response.success == true) {
+          toast.success(response.message);
+          resolve(response)
+        } else {
+          resolve(response)
+        }
+      })
+    })
+  },
 }

@@ -4,6 +4,7 @@ import Dashboard from '@/components/Dashboard.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import Home from '@/components/Home.vue';
+import VerifyRegister from '@/components/VerifyRegister.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,12 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+      path: '/email-verify/:token',
+      name: 'VerifyRegister',
+      component: VerifyRegister,
+      meta: { layout: 'empty' }
     },
     {
       path: '/about',
