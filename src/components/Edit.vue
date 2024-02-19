@@ -35,7 +35,6 @@ const update = () => {
     if (userId) {
         userField.value._method = 'PUT';
         USER_API.update(userField.value).then((response) => {
-            console.log(response);
             if (response.status) {
                 router.push('/dashboard');
             }

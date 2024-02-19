@@ -1,12 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-const dropdownOpen = ref(false);
-const isOpen = true; 
 </script>
 
 <template>
   <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600">
-    <div class="flex items-center">
+    <!-- <div class="flex items-center">
       <button class="text-gray-500 focus:outline-none lg:hidden" @click="isOpen = true">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -25,8 +22,8 @@ const isOpen = true;
           class="w-32 pl-10 pr-4 text-indigo-600 border-gray-200 rounded-md sm:w-64 focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
           type="text" placeholder="Search">
       </div>
-    </div>
-    <div class="flex items-center">
+    </div> -->
+    <!-- <div class="flex items-center">
       <div class="relative">
         <button class="relative z-10 block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none"
           @click="dropdownOpen = !dropdownOpen">
@@ -47,6 +44,6 @@ const isOpen = true;
           </div>
         </transition>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>

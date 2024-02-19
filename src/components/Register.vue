@@ -16,7 +16,6 @@ const registerField = reactive({
 const register = () => {
     registerProcess.value = true;
     AUTHENTICATE_API.create(registerField).then((response) => {
-        console.log(response);
         registerProcess.value = false;
         registerField.first_name = null
         registerField.last_name = null

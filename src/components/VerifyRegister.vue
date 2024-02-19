@@ -25,7 +25,6 @@ const emailVerify = () => {
             }
         }).catch(error => {
             if (error.response.data.data.token_invalid) {
-                console.log(error.response.data);
                 tokenExpired.value = true
             }
         })
@@ -37,7 +36,6 @@ const resendMail = () => {
         return alert('enter Email');
     }
     AUTHENTICATE_API.resendVerifyMail({ email: userExpired.value.email }).then((response) => {
-        console.log(response);
     }).catch(error => {
         if (error.response.data.data.email_invalid) {
             toast.error(error.response.data.message)

@@ -11,7 +11,6 @@ const UserFilter = reactive({ page: null, search: null, paginate: null, sort_by:
 
 const getUsers = () => {
   USER_API.get(UserFilter).then((response) => {
-    console.log(response.users);
     userList.value = response.users.data;
     pagination.value = response.users.pagination;
   });
@@ -37,7 +36,6 @@ const showRecodeTotal = (totalRecode) => {
 
 const sorting = (sortBy) => {
   UserFilter.sort_by = sortBy;
-  console.log(123);
   getUsers();
 };
 
@@ -51,7 +49,6 @@ const removeFilter = () => {
 const bulkStatus = () => {
   if (Array.isArray(bulkStatusIds.value.status_update)) {
     USER_API.bulkUserStatusUpdate(bulkStatusIds.value).then((response) => {
-      console.log(response);
       getUsers();
     });
   }
@@ -61,7 +58,6 @@ const bulkDelete = () => {
   const tempIds = { destroy_ids: bulkDeleteIds.value };
   if (Array.isArray(bulkDeleteIds.value) && tempIds.length !== 0) {
     USER_API.bulkUserDestroy(tempIds).then((response) => {
-      console.log(response);
       getUsers();
     });
   }

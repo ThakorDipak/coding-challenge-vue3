@@ -4,13 +4,11 @@ import { RouterLink, RouterView, useRouter } from 'vue-router'
 const defaultLayout = 'default'
 
 const { currentRoute } = useRouter()
-// console.log(currentRoute.value.meta.layout);
 
 const layout = computed(
   () => `${currentRoute.value.meta.layout || defaultLayout}-layout`,
 )
 
-console.log(layout.value);
 </script>
 
 <template>
