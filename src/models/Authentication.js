@@ -41,6 +41,8 @@ export default {
         } else {
           resolve(response.data)
         }
+      }).catch(error => {
+        reject(error.response)
       })
     })
   },

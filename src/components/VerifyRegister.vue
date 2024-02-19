@@ -14,7 +14,6 @@ const userExpired = ref({ email: null });
 
 const emailVerify = () => {
     if (route.params.token) {
-        // console.log(route.params);
         AUTHENTICATE_API.verification(route.params).then((response) => {
             if (response?.data?.token_expired) {
                 tokenExpired.value = true
@@ -60,9 +59,7 @@ onBeforeMount(() => {
                 <span class="text-2xl font-semibold text-gray-700"> Register Verify </span>
             </div>
             <div class="mt-6 text-center" v-if="tokenExpired">
-
                 <Form class="mt-4" @submit="resendMail()">
-
                     <div class="flex gap-4">
                         <div>
                             <label class="block mt-3">

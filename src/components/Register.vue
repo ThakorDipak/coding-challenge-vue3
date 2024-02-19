@@ -18,7 +18,10 @@ const register = () => {
     AUTHENTICATE_API.create(registerField).then((response) => {
         console.log(response);
         registerProcess.value = false;
-        // route.push({ name: 'CityList' })
+        registerField.first_name = null
+        registerField.last_name = null
+        registerField.email = null
+        registerField.password = null
     }).catch((error) => {
         registerProcess.value = false;
     })
@@ -75,11 +78,16 @@ const register = () => {
                     </RouterLink>
                 </div>
 
-                <div class="mt-6">
+                <div class="mt-6 " v-if="!registerProcess">
                     <button type="submit"
-                        class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
+                        class=" w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
                         Submit
                     </button>
+                </div>
+                <div class="flex-row space-x-4 w-full" v-if="registerProcess">
+                    <div
+                        class="w-12 h-12 rounded-full animate-spin border border-dashed border-cyan-500 border-t-transparent">
+                    </div>
                 </div>
             </form>
         </div>
