@@ -5,6 +5,7 @@ const { createAPIUrl } = ObjectAction
 
 const userUrl = 'user'
 const bulkUserDeleteUrl = 'user/delete'
+const bulkUserStatusUrl = 'user/status'
 const headers = { 'Content-Type': 'multipart/form-data' }
 
 export default {
@@ -50,6 +51,18 @@ export default {
     bulkUserDestroy(data) {
         return new Promise(async (resolve, reject) => {
             await API.post(bulkUserDeleteUrl, data, headers).then(async (response) => {
+                if (response && response.status == true) {
+                    resolve(response.data)
+                } else {
+                    resolve(response.data)
+                }
+            })
+        })
+    },
+
+    bulkUserStatusUpdate(data) {
+        return new Promise(async (resolve, reject) => {
+            await API.post(bulkUserStatusUrl, data, headers).then(async (response) => {
                 if (response && response.status == true) {
                     resolve(response.data)
                 } else {
