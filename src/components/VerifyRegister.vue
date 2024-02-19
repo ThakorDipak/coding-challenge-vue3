@@ -2,29 +2,48 @@
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import AUTHENTICATE_API from '@/models/Authentication';
 import { onBeforeMount, ref } from 'vue';
+import { Form } from 'vee-validate'
+import { toast } from "vue3-toastify";
+
 
 const router = useRouter()
 const route = useRoute()
 
 const tokenExpired = ref(false);
-const userExpired = ref({});
+const userExpired = ref({ email: null });
 
 const emailVerify = () => {
     if (route.params.token) {
-        console.log(route.params);
+        // console.log(route.params);
         AUTHENTICATE_API.verification(route.params).then((response) => {
             if (response?.data?.token_expired) {
                 tokenExpired.value = true
                 userExpired.value = response.data.user
+            } else {
+                setTimeout(function () {
+                    router.push('/');
+                }, 2000);
             }
-            console.log(response);
+        }).catch(error => {
+            if (error.response.data.data.token_invalid) {
+                console.log(error.response.data);
+                tokenExpired.value = true
+            }
         })
     }
 }
 
 const resendMail = () => {
+    if (userExpired.value?.email == '') {
+        return alert('enter Email');
+    }
     AUTHENTICATE_API.resendVerifyMail({ email: userExpired.value.email }).then((response) => {
         console.log(response);
+    }).catch(error => {
+        if (error.response.data.data.email_invalid) {
+            toast.error(error.response.data.message)
+            tokenExpired.value = true
+        }
     })
 }
 
@@ -32,7 +51,6 @@ onBeforeMount(() => {
     emailVerify()
 });
 
-console.log(route.params);
 </script>
 
 <template>
@@ -42,15 +60,22 @@ console.log(route.params);
                 <span class="text-2xl font-semibold text-gray-700"> Register Verify </span>
             </div>
             <div class="mt-6 text-center" v-if="tokenExpired">
-                <!-- <RouterLink
-                    class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500"
-                    :to="{ name: 'Register' }">
-                    Resend verification mail
-                </RouterLink> -->
-                <button @click="resendMail()"
-                    class="w-full px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
-                    Resend verification mail
-                </button>
+
+                <Form class="mt-4" @submit="resendMail()">
+
+                    <div class="flex gap-4">
+                        <div>
+                            <label class="block mt-3">
+                                <input v-model="userExpired.email" type="email" placeholder="Enter Email"
+                                    class="block w-full mt-1 border border-gray-500 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500">
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-full m-2 px-4 py-2 text-sm text-center text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500">
+                        Resend verification mail
+                    </button>
+                </Form>
             </div>
         </div>
     </div>
