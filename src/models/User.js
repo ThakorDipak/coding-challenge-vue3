@@ -34,6 +34,19 @@ export default {
         })
     },
 
+    show(data) {
+        return new Promise(async (resolve, reject) => {
+            const Url = createAPIUrl(userUrl, data.id)
+            await API.get(Url).then(async (response) => {
+                if (response && response.success == true) {
+                    resolve(response.data)
+                } else {
+                    resolve(response.data)
+                }
+            })
+        })
+    },
+
     bulkUserDestroy(data) {
         return new Promise(async (resolve, reject) => {
             await API.post(bulkUserDeleteUrl, data, headers).then(async (response) => {

@@ -197,7 +197,12 @@ const userDelete = (user) => {
                 </td>
 
                 <td class="px-6 py-4 text-sm font-medium leading-5 border-b border-gray-200 whitespace-nowrap">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900 font-bold">Edit</a>
+
+                  <RouterLink :to="{ name: 'UserEdit', params: { userId: user.id } }"
+                    class="text-indigo-600 hover:text-indigo-900 font-bold">
+                    Edit
+                  </RouterLink>
+
                   <button @click="userDelete(user)"
                     class="text-orange-500 hover:text-orange-600 font-bold ml-2">Delete</button>
                 </td>

@@ -5,6 +5,7 @@ import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import Home from '@/components/Home.vue';
 import VerifyRegister from '@/components/VerifyRegister.vue';
+import Edit from '@/components/Edit.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+      path: '/edit/:userId',
+      name: 'UserEdit',
+      component: Edit
     },
     {
       path: '/email-verify/:token',
